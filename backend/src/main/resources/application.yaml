@@ -29,5 +29,15 @@ Cloudinary:
   api-key: ${CLOUDINARY_API_KEY}
   api-secret: ${CLOUDINARY_API_SECRET}
 
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
+  expiration:
+    time: ${JWT_EXPIRATION_TIME}
+
+
+
+
+
 
 
