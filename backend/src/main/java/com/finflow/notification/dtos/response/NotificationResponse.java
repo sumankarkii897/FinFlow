@@ -18,6 +18,8 @@ public class NotificationResponse {
 
     private String subject;
 
+    private String recipient;
+
     private String body;
 
     private NotificationType type;
@@ -27,5 +29,5 @@ public class NotificationResponse {
     // for values/variables to be passed into email template to send
     private String templateName;
 
-    private Map<String, Object> templateVariables;
+//    private Map<String, Object> templateVariables;
 }

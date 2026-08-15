@@ -7,7 +7,21 @@ spring:
   application:
     name: backend
   config:
-    import: optional:file:.env[.properties],optional:file:./.env[.properties],optional:classpath:.env[.properties]
+    import: optional:file:.env[.properties]
+  mail:
+    username: ${MAIL_USER}
+    password: ${MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+#    Enable TLS SMTP MAIL
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
 
   datasource:
     url: ${LOCAL_DB_URL}

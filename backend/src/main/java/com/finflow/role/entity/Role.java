@@ -1,6 +1,7 @@
 package com.finflow.role.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -16,5 +17,6 @@ public class Role {
     private Long id;
 
     @Column(unique = true)
+    @NotBlank(message = "Name is required.")
     private String name;
 }
