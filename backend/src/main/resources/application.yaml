@@ -48,7 +48,9 @@ jwt:
     key: ${JWT_SECRET_KEY}
   expiration:
     time: ${JWT_EXPIRATION_TIME}
-
+password:
+  reset:
+    link: ${PASSWORD_RESET_LINK}
 
 
 

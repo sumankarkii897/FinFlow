@@ -24,7 +24,7 @@ public class NotificationRequest {
     @NotBlank(message = "Subject is required")
     private String subject;
 
-    @NotBlank(message = "Body is required.")
+//    @NotBlank(message = "Body is required.")
     private String body;
 
     @NotNull(message = "Notification type is required")

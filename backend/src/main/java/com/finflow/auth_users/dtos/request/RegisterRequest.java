@@ -26,8 +26,8 @@ public class RegisterRequest {
     @Size(min = 8, message = "Password must be of 8 character.")
     private String password;
 
-    @NotBlank(message = "Profile Picture is required")
-    private String profilePictureUrl;
+//    @NotBlank(message = "Profile Picture is required")
+//    private String profilePictureUrl;
 
 
 
