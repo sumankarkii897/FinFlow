@@ -22,9 +22,10 @@ public class Notification {
     @Column(nullable = false)
     private String subject;
 
+
     @Column(nullable = false)
     private String recipient;
-
+    @Lob
     @Column(nullable = false)
     private String body;
 

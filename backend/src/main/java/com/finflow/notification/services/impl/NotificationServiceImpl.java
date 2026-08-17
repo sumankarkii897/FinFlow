@@ -40,23 +40,29 @@ try{
     helper.setTo(notificationRequest.getRecipient());
     helper.setSubject(notificationRequest.getSubject());
 // use template if provided
-    if(notificationRequest.getTemplateName() !=null){
+    String body;
+    if(notificationRequest.getTemplateName() !=null
+            && !notificationRequest.getTemplateName().isBlank()){
         Context context = new Context();
         context.setVariables(notificationRequest.getTemplateVariables());
-        String htmlContent = templateEngine.process(notificationRequest.getTemplateName(), context);
-        helper.setText(htmlContent, true);
+//        String htmlContent = templateEngine.process(notificationRequest.getTemplateName(), context);
+     body = templateEngine.process(notificationRequest.getTemplateName(), context);
+        helper.setText(body, true);
 
     }
     else{
 //        if no template send text body directly
-        helper.setText(notificationRequest.getBody(), true);
+        body = notificationRequest.getBody();
+//        helper.setText(notificationRequest.getBody(), true);
+        helper.setText(body, true);
     }
     mailSender.send(mimeMessage);
 // Save to our db table
     Notification notificationToSave = Notification.builder()
             .recipient(notificationRequest.getRecipient())
             .subject(notificationRequest.getSubject())
-            .body(notificationRequest.getBody())
+//            .body(notificationRequest.getBody())
+            .body(body)
             .type(NotificationType.EMAIL)
             .user(user)
             .build();
