@@ -1,6 +1,7 @@
 package com.finflow.auth_users.services.impl;
 
 import com.finflow.account.entity.Account;
+import com.finflow.account.services.AccountService;
 import com.finflow.auth_users.dtos.request.ForgetPasswordRequest;
 import com.finflow.auth_users.dtos.request.LoginRequest;
 import com.finflow.auth_users.dtos.request.RegisterRequest;
@@ -51,6 +52,7 @@ public class AuthServiceImpl implements AuthService {
     private final NotificationService notificationService;
     private final CodeGenerator codeGenerator;
     private final PasswordResetCodeRepository passwordResetCodeRepository;
+ private final AccountService accountService;
 
     @Value("${password.reset.link}")
     private String resetLink;
@@ -96,8 +98,8 @@ public class AuthServiceImpl implements AuthService {
                 .active(true)
                 .build();
        User savedUser =userRepository.save(user);
-       // todo auto generate acc no for the user
-//        Account savedAccount = accountService.createAccount(AccountType.SAVING, savedUser);
+       // auto generate acc no for the user
+        Account savedAccount = accountService.createAccount(AccountType.SAVING, savedUser);
 //        send a welcome email of the user
         Map<String,Object> map = new HashMap<>();
         map.put("name",savedUser.getFirstName());
@@ -114,7 +116,7 @@ public class AuthServiceImpl implements AuthService {
 //        send acc details to user email
         Map<String,Object> accountVariables = new HashMap<>();
         accountVariables.put("name",savedUser.getFirstName());
-//        accountVariables.put("accountNumber",savedAccount.getAccountNumber());
+        accountVariables.put("accountNumber",savedAccount.getAccountNumber());
         accountVariables.put("accountType",AccountType.SAVING.name());
         accountVariables.put("currency", Currency.NRP);
 
@@ -130,8 +132,8 @@ public class AuthServiceImpl implements AuthService {
         return ApiResponse.<String>builder()
                 .status(HttpStatus.CREATED.value())
                 .message("User registered successfully")
-//                .data("Email of your account details has been sent to you.Your account number is :"
-//                +savedAccount.getAccountNumber())
+                .data("Email of your account details has been sent to you.Your account number is :"
+                +savedAccount.getAccountNumber())
                 .timestamp(LocalDateTime.now())
                 .build();
     }
