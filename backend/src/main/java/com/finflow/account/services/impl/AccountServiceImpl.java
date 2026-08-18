@@ -5,7 +5,7 @@ import com.finflow.account.entity.Account;
 import com.finflow.account.repository.AccountRepository;
 import com.finflow.account.services.AccountService;
 import com.finflow.auth_users.entity.User;
-import com.finflow.auth_users.services.impl.UserService;
+import com.finflow.auth_users.services.UserService;
 import com.finflow.enums.AccountStatus;
 import com.finflow.enums.AccountType;
 import com.finflow.enums.Currency;

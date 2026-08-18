@@ -36,6 +36,7 @@ public class Transaction {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private TransactionStatus status = TransactionStatus.PENDING;
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)

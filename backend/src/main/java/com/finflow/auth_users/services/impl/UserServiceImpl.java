@@ -6,11 +6,13 @@ import com.finflow.auth_users.dtos.request.UpdatePasswordRequest;
 import com.finflow.auth_users.dtos.response.UserResponse;
 import com.finflow.auth_users.entity.User;
 import com.finflow.auth_users.repository.UserRepository;
+import com.finflow.auth_users.services.UserService;
 import com.finflow.exceptions.BadRequestException;
 import com.finflow.exceptions.NotFoundException;
 import com.finflow.notification.dtos.request.NotificationRequest;
 import com.finflow.notification.services.NotificationService;
 import com.finflow.response.ApiResponse;
+import com.finflow.response.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -25,14 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
 
 
 @Service
@@ -73,13 +70,23 @@ UserResponse userResponse = modelMapper.map(user, UserResponse.class);
     }
 
     @Override
-    public ApiResponse<Page<UserResponse>> getAllUsers(Pageable pageable) {
+    public ApiResponse<PageResponse<UserResponse>> getAllUsers(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
        Page<UserResponse> userResponses = users.map(user -> modelMapper.map(user, UserResponse.class));
-        return ApiResponse.<Page<UserResponse>>builder()
+
+       PageResponse<UserResponse> pageResponse = PageResponse.<UserResponse>builder()
+               .content(userResponses.getContent())
+               .page(userResponses.getNumber())
+               .size(userResponses.getSize())
+               .totalElements(userResponses.getTotalElements())
+               .totalPages(userResponses.getTotalPages())
+               .first(userResponses.isFirst())
+               .last(userResponses.isLast())
+               .build();
+        return ApiResponse.<PageResponse<UserResponse>>builder()
                 .status(HttpStatus.OK.value())
                 .message("User list fetched successfully")
-                .data(userResponses)
+                .data(pageResponse)
                 .timestamp(LocalDateTime.now())
                 .build();
     }

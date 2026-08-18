@@ -27,5 +27,7 @@ public class TransactionRequest {
     @NotBlank(message = "Description is required.")
     private String description;
 
-    private String destinationAccount;
+    private String accountNumber;
+
+    private String destinationAccountNumber;
 }

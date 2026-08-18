@@ -2,8 +2,9 @@ package com.finflow.auth_users.controller;
 
 import com.finflow.auth_users.dtos.request.UpdatePasswordRequest;
 import com.finflow.auth_users.dtos.response.UserResponse;
-import com.finflow.auth_users.services.impl.UserService;
+import com.finflow.auth_users.services.UserService;
 import com.finflow.response.ApiResponse;
+import com.finflow.response.PageResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<UserResponse>>> getUsers(Pageable pageable) {
+    public ResponseEntity<ApiResponse<PageResponse<UserResponse>>> getUsers(Pageable pageable) {
         return ResponseEntity.ok(
                userService.getAllUsers(pageable)
         );
